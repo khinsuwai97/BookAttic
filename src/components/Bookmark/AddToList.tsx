@@ -14,7 +14,7 @@ const AddToList = () => {
             id={book.id}
             name={book.name}
             author={book.author}
-            category={book.author}
+            category={book.category}
             read={book.read}
             tag={book.tag}
             image={book.image}
