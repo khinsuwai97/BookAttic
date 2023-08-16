@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react';
+import { FC, ChangeEvent, HTMLInputTypeAttribute } from 'react';
 import Pagination from '@mui/material/Pagination';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan } from '@mui/material/colors';
@@ -27,6 +27,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({
   totalPages = 5,
 }) => {
   const handleChange = (e: ChangeEvent<unknown>, value: number) => {
+    e.preventDefault();
     setPage(value);
   };
   return (
