@@ -1,7 +1,7 @@
 const Loading = () => {
   return (
     <div className=" flex justify-around flex-wrap gap-6 animate-pulse">
-      {Array.from({ length: 20 }, (_, i) => {
+      {Array.from({ length: 10 }, (_, i) => {
         return (
           <div
             key={i}

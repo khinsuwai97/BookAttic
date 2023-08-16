@@ -6,6 +6,7 @@ import { useAddToBookmark } from '../../hooks/useAddToBookmark';
 
 const Bookmark = () => {
   const { books } = useAddToBookmark();
+
   return (
     <section className="md:py-[60px] py-14 ">
       <div className="max-w-[1280px] my-0 mx-auto py-0 sm:px-[32px] px-[24px]  ">

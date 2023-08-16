@@ -1,4 +1,4 @@
-import { ButtonClear } from '../ui/Button';
+import { ButtonList } from '../ui/Button';
 import AddToLisItems from './AddToLisItems';
 import { useAddToBookmark } from '../../hooks/useAddToBookmark';
 
@@ -22,7 +22,7 @@ const AddToList = () => {
         );
       })}
       <div className="flex justify-end mb-[90px]">
-        <ButtonClear onClick={clearBookmark} />
+        <ButtonList onClick={clearBookmark} text="Clear List" />
       </div>
     </div>
   );

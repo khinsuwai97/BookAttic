@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { navLinks } from '../data';
 import { FaBars } from 'react-icons/fa';
-
+import PassCodeModal from './PassCodeModal';
+import usePasscodeModal from '../hooks/usePasscodeModal';
 interface NavbarProps {
   onClick: () => void;
   goToPage: (link: string, auth: boolean) => void;
 }
 
 const Navbar = ({ onClick, goToPage }: NavbarProps) => {
+  const { isOpen } = usePasscodeModal();
   return (
     <>
       <nav
@@ -39,11 +41,9 @@ const Navbar = ({ onClick, goToPage }: NavbarProps) => {
           ))}
         </ul>
       </nav>
+      {isOpen && <PassCodeModal />}
     </>
   );
 };
 
 export default Navbar;
-{
-  /* <NavLink to={navLink.id}>{navLink.title}</NavLink> */
-}

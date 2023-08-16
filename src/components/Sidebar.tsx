@@ -1,7 +1,8 @@
 import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { navLinks } from '../data';
-
+import PassCodeModalMobile from './PassCodeModalMobile';
+import usePasscodeModalMobile from '../hooks/usePasscodeModalMobile';
 interface SidebarProps {
   toggleNav: boolean;
   closeNav: () => void;
@@ -11,8 +12,13 @@ interface SidebarProps {
 const Sidebar = ({ toggleNav, closeNav, goToPage }: SidebarProps) => {
   const handleGoToPage = (link: string, auth: boolean) => {
     goToPage(link, auth);
+    if (link === '/admin') {
+      return;
+    }
     closeNav();
   };
+
+  const { isOpen } = usePasscodeModalMobile();
 
   return (
     <aside className={toggleNav ? 'sidebar show-sidebar' : 'sidebar'}>
@@ -28,7 +34,7 @@ const Sidebar = ({ toggleNav, closeNav, goToPage }: SidebarProps) => {
           <FaTimes className="text-[28px] cursor-pointer text-[#a64fe7] z-50" />
         </button>
       </div>
-      <ul className="text-left pt-[16px] px-[24px] ">
+      <ul className="text-left pt-[16px] px-[24px] relative ">
         {navLinks.map((link) => {
           return (
             <li
@@ -41,6 +47,7 @@ const Sidebar = ({ toggleNav, closeNav, goToPage }: SidebarProps) => {
           );
         })}
       </ul>
+      {isOpen && <PassCodeModalMobile closeNav={closeNav} />}
     </aside>
   );
 };

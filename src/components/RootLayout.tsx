@@ -3,10 +3,15 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
+import usePasscodeModal from '../hooks/usePasscodeModal';
+import usePasscodeModalMobile from '../hooks/usePasscodeModalMobile';
 
 const RootLayout = () => {
   const [toggleNav, setToggleNav] = useState(false);
+
   const navigate = useNavigate();
+  const { onOpen } = usePasscodeModal();
+  const { onOpen: onMobileOpen } = usePasscodeModalMobile();
 
   const openToggleNav = () => {
     setToggleNav(true);
@@ -17,8 +22,18 @@ const RootLayout = () => {
   };
 
   const goToPage = (link: string, auth: boolean) => {
-    if (auth && link === '/admin') {
-      navigate('/');
+    if (auth) {
+      onOpen();
+    } else if (link) {
+      navigate(link);
+    }
+  };
+
+  const goToPageMobile = (link: string, auth: boolean) => {
+    if (auth) {
+      onMobileOpen();
+    } else if (link === '/admin') {
+      return;
     } else {
       navigate(link);
     }
@@ -30,7 +45,7 @@ const RootLayout = () => {
       <Sidebar
         toggleNav={toggleNav}
         closeNav={closeToggleNav}
-        goToPage={goToPage}
+        goToPage={goToPageMobile}
       />
       <main className="w-full ">
         <Outlet />

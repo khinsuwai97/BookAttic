@@ -3,6 +3,7 @@ import { filterOptions } from '../../data';
 
 interface FilterFeatureProps {
   handleToggleBtn: (choice: string) => void;
+
   selectAll: () => void;
 }
 
@@ -29,7 +30,7 @@ const FilterFeature = ({ handleToggleBtn, selectAll }: FilterFeatureProps) => {
                 {option.title}
               </p>
               <HiChevronDown
-                className={`w-6 text-[20px] text-white transition rotate-0`}
+                className={`w-6 text-[20px] text-white transition `}
               />
             </button>
           );

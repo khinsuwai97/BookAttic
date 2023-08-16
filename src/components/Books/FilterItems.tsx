@@ -1,11 +1,21 @@
+import { Author, Tag, Category } from '../../types';
+import FilterLoading from '../FilterLoading';
+import Error from '../Error';
+
 interface FilterItemsProps {
   toggle: boolean;
   option: string;
   selectedOption: (option: string) => void;
   selected: string;
-  authors: string[];
-  categories: string[];
-  features: string[];
+  authors: Author[] | undefined;
+  categories: Category[] | undefined;
+  features: Tag[] | undefined;
+  authorIsLoading: boolean;
+  categoryIsLoading: boolean;
+  tagIsLoading: boolean;
+  authorError: boolean;
+  tagError: boolean;
+  categoryError: boolean;
 }
 
 const FilterItems = ({
@@ -16,8 +26,14 @@ const FilterItems = ({
   authors,
   categories,
   features,
+  authorIsLoading,
+  categoryIsLoading,
+  tagIsLoading,
+  categoryError,
+  authorError,
+  tagError,
 }: FilterItemsProps) => {
-  const getData = (): string[] | undefined => {
+  const getData = (): Author[] | Category[] | Tag[] | undefined => {
     if (option === 'Authors') {
       return authors;
     }
@@ -51,16 +67,22 @@ const FilterItems = ({
         </p>
         <ul className="flex justify-evenly  flex-wrap  text-sm text-white  gap-3 cursor-pointer">
           {/* <li className="hover:underline tracking-wide">All</li> */}
+          {categoryIsLoading && <FilterLoading />}
+          {authorIsLoading && <FilterLoading />}
+          {tagIsLoading && <FilterLoading />}
+          {categoryError && <Error text="Something went wrong!" />}
+          {authorError && <Error text="Something went wrong!" />}
+          {tagError && <Error text="Something went wrong!" />}
           {getData()?.map((data) => {
             return (
               <li
-                key={data}
+                key={data._id}
                 className={`hover:underline font-rubik  tracking-wide ${
-                  selected === data ? 'text-[#a64fe7]' : ''
+                  selected === data.name ? 'text-[#a64fe7]' : ''
                 } `}
-                onClick={() => selectedOption(data)}
+                onClick={() => selectedOption(data.name)}
               >
-                {data}
+                {data.name}
               </li>
             );
           })}

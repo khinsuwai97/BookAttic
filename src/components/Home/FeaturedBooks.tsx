@@ -3,7 +3,7 @@ import BooksCarousel from './BooksCarousel';
 import CarouselLoading from '../CarouselLoading';
 import Error from '../Error';
 import { ButtonView } from '../ui/Button';
-import { useFetchBooks } from '../../hooks/useFetchBooks';
+import { useFetchBooks } from '../../hooks/useFetchBook';
 
 const FeaturedBooks = () => {
   const { isError, isLoading, data } = useQuery({

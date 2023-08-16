@@ -36,18 +36,64 @@ export const BacktoBooksButton = () => {
   );
 };
 
-interface ButtonClearProps {
+interface ButtonListProps {
   onClick: () => void;
+  text: string;
 }
 
-export const ButtonClear = ({ onClick }: ButtonClearProps) => {
+export const ButtonList = ({ onClick, text }: ButtonListProps) => {
   return (
     <button
-      className={`px-[20px] py-[8px] rounded-lg font-rubik text-[16px]  outline-none font-medium cursor-pointer whitespace-nowrap bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 `}
+      className={`px-[20px] py-[4px] rounded-lg font-rubik text-[16px]  outline-none font-medium cursor-pointer whitespace-nowrap bg-slate-800 text-white border-0 flex  `}
+      type="button"
       onClick={onClick}
     >
       {' '}
-      Clear List
+      {text}
+    </button>
+  );
+};
+
+interface CreateButtonProps {
+  onClick?: () => void;
+  text: string;
+}
+export const CreatButton = ({ onClick, text }: CreateButtonProps) => {
+  return (
+    <button
+      className={`px-[20px] py-[4px] rounded-lg font-rubik text-[16px]  outline-none font-medium cursor-pointer whitespace-nowrap bg-slate-800  text-white border-0  `}
+      type="submit"
+      onClick={onClick}
+    >
+      {' '}
+      {text}
+    </button>
+  );
+};
+
+interface ButtonPaginationProps {
+  onClick: () => void;
+  text: string;
+  disabled?: boolean;
+  create?: boolean;
+}
+export const ButtonPagination = ({
+  onClick,
+  text,
+  disabled,
+  create,
+}: ButtonPaginationProps) => {
+  return (
+    <button
+      disabled={disabled}
+      className={`px-[20px] py-[4px] rounded-lg font-rubik text-[16px]  outline-none font-medium cursor-pointer whitespace-nowrap ${
+        create ? 'bg-cyan-700' : 'bg-slate-800'
+      }  text-white border-0  `}
+      type="submit"
+      onClick={onClick}
+    >
+      {' '}
+      {text}
     </button>
   );
 };
