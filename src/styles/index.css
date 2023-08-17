@@ -93,6 +93,9 @@ tbody {
 .table-row {
   @apply font-rubik text-[16px] text-slate-200 ml-4;
 }
+.table-row-feature {
+  @apply font-rubik text-[16px] text-slate-200;
+}
 
 th {
   /* border-bottom: 1px solid #3f3f46; */

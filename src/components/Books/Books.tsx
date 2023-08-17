@@ -78,15 +78,15 @@ const Books = () => {
     switch (type) {
       case 'Authors':
         return data?.Result?.filter((book) =>
-          book.author.name.toLowerCase().includes(selected.toLowerCase())
+          book?.author?.name.toLowerCase().includes(selected.toLowerCase())
         );
       case 'Categories':
         return data?.Result?.filter((book) =>
-          book.category.name.toLowerCase().includes(selected.toLowerCase())
+          book?.category?.name.toLowerCase().includes(selected.toLowerCase())
         );
       case 'Features':
         return data?.Result?.filter((book) =>
-          book.tag.name.toLowerCase().includes(selected.toLowerCase())
+          book?.tag?.name.toLowerCase().includes(selected.toLowerCase())
         );
       default:
         return data?.Result;

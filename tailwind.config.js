@@ -4,7 +4,6 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        montserrat: ['Montserrat', 'sans-serif'],
         lobsterTwo: ['Lobster Two', 'sans-serif'],
         rubik: ['Rubik', 'sans-serif'],
       },

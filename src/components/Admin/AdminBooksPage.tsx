@@ -1,10 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import DebouncedInput from './DebounceInput';
-import { Link } from 'react-router-dom';
 import { fetchBooksAdmin, deleteBooksAdmin } from '../../lib/bookApi';
 import { ButtonList } from '../ui/Button';
+
+const bookHeader = [
+  { id: 'no', name: 'No' },
+  { id: 'name', name: 'Name' },
+  { id: 'author', name: 'Author', header: true },
+  { id: 'category', name: 'Category', header: true },
+  { id: 'tag', name: 'Tag', header: true },
+  { id: 'image', name: 'Image' },
+  { id: 'edit', name: 'Edit' },
+  { id: 'delete', name: 'Delete' },
+];
 
 const AdminBooksPage = () => {
   const [page, setPage] = useState(1);
@@ -34,7 +44,7 @@ const AdminBooksPage = () => {
     return {
       id: book?._id,
       author: book?.author?.name,
-      category: book?.category.name,
+      category: book?.category?.name,
       pdf_url: book?.pdf_url,
       image: book?.image,
       tag: book?.tag?.name,
@@ -44,17 +54,6 @@ const AdminBooksPage = () => {
       no: 'No',
     };
   });
-
-  const bookHeader = [
-    { id: 'no', name: 'No' },
-    { id: 'name', name: 'Name' },
-    { id: 'author', name: 'Author' },
-    { id: 'category', name: 'Category' },
-    { id: 'Tag', name: 'Tag' },
-    { id: 'image', name: 'Image' },
-    { id: 'edit', name: 'Edit' },
-    { id: 'delete', name: 'Delete' },
-  ];
 
   useEffect(() => {
     window.scrollTo({
@@ -80,15 +79,21 @@ const AdminBooksPage = () => {
                 value={filter ?? ''}
                 onChange={(value: string) => setFilter(String(value))}
                 debounce={300}
+                type="Filter"
               />
             </div>
           </div>
-          {/* className="capitalize px-3.5 py-2" */}
           <table className="border font-rubik border-gray-700 w-full ">
             <thead className="bg-cyan-700 grid grid-cols-8 items-center justify-center gap-4 table-header ">
               {bookHeader.map((book) => (
                 <tr key={book.id} className=" px-3.5 py-2">
-                  <th>{book.name}</th>
+                  {book.header ? (
+                    <th>
+                      <Link to={`/admin/${book.id}`}>{book.name}</Link>
+                    </th>
+                  ) : (
+                    <th>{book.name}</th>
+                  )}
                 </tr>
               ))}
             </thead>

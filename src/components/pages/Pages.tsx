@@ -12,7 +12,9 @@ import CreateBooks from '../Admin/CreateBooks';
 import EditBooks from '../Admin/EditBooks';
 import usePasscode from '../../hooks/usePasscode';
 import AdminBooksPage from '../Admin/AdminBooksPage';
-
+import Category from '../Admin/Category';
+import Author from '../Admin/Author';
+import Tag from '../Admin/Tag';
 const Pages = () => {
   const { isLoggedIn } = usePasscode();
 
@@ -36,6 +38,9 @@ const Pages = () => {
             { index: true, element: <AdminBooksPage /> },
             { path: '/admin/create', element: <CreateBooks /> },
             { path: '/admin/:id/edit', element: <EditBooks /> },
+            { path: '/admin/category', element: <Category /> },
+            { path: '/admin/author', element: <Author /> },
+            { path: '/admin/tag', element: <Tag /> },
           ],
         },
 

@@ -28,7 +28,7 @@ const Sidebar = ({ toggleNav, closeNav, goToPage }: SidebarProps) => {
           to="/"
           onClick={closeNav}
         >
-          BookAttic
+          YouthLibrary
         </Link>
         <button onClick={closeNav}>
           <FaTimes className="text-[28px] cursor-pointer text-[#a64fe7] z-50" />

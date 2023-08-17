@@ -1,10 +1,10 @@
-import { ChangeEvent, useState, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchBooksAdminbyId, editBooksAdmin } from '../../lib/bookApi';
+import { errorToast, successToast } from '../../lib/showToast';
 import Error from '../Error';
 import Form from './Form';
-import { errorToast, successToast } from '../../lib/showToast';
 
 const EditBooks = () => {
   const navigate = useNavigate();
@@ -21,12 +21,11 @@ const EditBooks = () => {
   const iniitalCategory = data ? data.Result?.category : '';
   const iniitalAuthour = data ? data.Result?.author : '';
   const iniitalTag = data ? data.Result?.tag : '';
-
-  const [editName, setEditName] = useState<string>(iniitalName);
-  const [editPdf_url, setEditPdf_url] = useState<string>(iniitalPdf_url);
-  const [editCategory, setEditCategory] = useState<string>(iniitalCategory);
-  const [editAuthor, setEditAuthor] = useState<string>(iniitalAuthour);
-  const [editTag, setEditTag] = useState<string>(iniitalTag);
+  const [editName, setEditName] = useState(iniitalName);
+  const [editPdf_url, setEditPdf_url] = useState(iniitalPdf_url);
+  const [editCategory, setEditCategory] = useState(iniitalCategory);
+  const [editAuthor, setEditAuthor] = useState(iniitalAuthour);
+  const [editTag, setEditTag] = useState(iniitalTag);
   const [editImage, setEditImage] = useState<string | Blob>('');
 
   if (isError) {
@@ -92,7 +91,7 @@ const EditBooks = () => {
     setEditAuthor('');
     setEditTag('');
     setEditImage('');
-    successToast(editName, 'is added to your book list!');
+    successToast(editName, 'is edited and added to your book list!');
     navigate('/admin');
   };
 

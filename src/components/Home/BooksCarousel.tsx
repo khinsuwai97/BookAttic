@@ -10,6 +10,7 @@ const BooksCarousel = ({ books }: BooksCarouselProps) => {
   const handleDragStart = (e: React.DragEvent) => {
     e.preventDefault();
   };
+
   const items = books.slice(0, 6).map((book) => {
     return (
       <>

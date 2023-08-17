@@ -1,18 +1,20 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { FormEvent, ChangeEvent } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createBooks } from '../../lib/bookApi';
-import Error from '../Error';
 import { errorToast, successToast } from '../../lib/showToast';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import clearLocalStorage from '../../lib/clearLocalStorage';
+import Error from '../Error';
 import Form from './Form';
 
 const CreateBooks = () => {
-  const [name, setName] = useState('');
-  const [pdf_url, setPdf_url] = useState('');
-  const [category, setCategory] = useState('');
-  const [author, setAuthor] = useState('');
-  const [tag, setTag] = useState('');
-  const [image, setImage] = useState<string | Blob>('');
+  const [name, setName] = useLocalStorage('name', '');
+  const [pdf_url, setPdf_url] = useLocalStorage('pdf_url', '');
+  const [category, setCategory] = useLocalStorage('category', '');
+  const [author, setAuthor] = useLocalStorage('author', '');
+  const [tag, setTag] = useLocalStorage('tag', '');
+  const [image, setImage] = useLocalStorage<string | Blob>('image', '');
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -24,7 +26,6 @@ const CreateBooks = () => {
   });
 
   if (addBookMutaion.error) {
-    console.log(addBookMutaion.error);
     return <Error text="Cannot create book.Something went wrong!" />;
   }
 
@@ -67,6 +68,13 @@ const CreateBooks = () => {
     formData.append('image', image);
     addBookMutaion.mutate(formData);
 
+    clearLocalStorage('name');
+    clearLocalStorage('pdf_url');
+    clearLocalStorage('category');
+    clearLocalStorage('author');
+    clearLocalStorage('tag');
+    clearLocalStorage('image');
+
     setName('');
     setPdf_url('');
     setCategory('');
@@ -101,4 +109,3 @@ const CreateBooks = () => {
 };
 
 export default CreateBooks;
-//

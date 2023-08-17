@@ -47,6 +47,7 @@ const Form = ({
             </label>
             <input
               type="text"
+              id="name"
               placeholder="Enter name"
               className="form-input"
               value={name}
@@ -59,6 +60,7 @@ const Form = ({
             </label>
             <input
               type="text"
+              id="pdf_url"
               placeholder="Enter pdf_url"
               className="form-input"
               value={pdf_url}
@@ -66,11 +68,16 @@ const Form = ({
             />
           </div>
           <div className="form-container">
-            <label htmlFor="category" className="form-label ">
+            <label
+              htmlFor="category"
+              className="form-label cursor-pointer "
+              onClick={() => navigate('/admin/category')}
+            >
               Category
             </label>
             <input
               type="text"
+              id="category"
               placeholder="Enter category"
               className="form-input"
               value={category}
@@ -78,11 +85,16 @@ const Form = ({
             />
           </div>
           <div className="form-container">
-            <label htmlFor="author" className="form-label ">
+            <label
+              htmlFor="author"
+              className="form-label cursor-pointer "
+              onClick={() => navigate('/admin/author')}
+            >
               Author
             </label>
             <input
               type="text"
+              id="author"
               placeholder="Enter author"
               className="form-input"
               value={author}
@@ -90,11 +102,16 @@ const Form = ({
             />
           </div>
           <div className="form-container">
-            <label htmlFor="tag" className="form-label ">
+            <label
+              htmlFor="tag"
+              className="form-label cursor-pointer "
+              onClick={() => navigate('/admin/tag')}
+            >
               Tag Name
             </label>
             <input
               type="text"
+              id="tag"
               placeholder="Enter tag name"
               className="form-input"
               value={tag}
@@ -107,6 +124,7 @@ const Form = ({
             </label>
             <input
               type="file"
+              id="file"
               name="image"
               placeholder="Enter tag name"
               className="text-slate-200"

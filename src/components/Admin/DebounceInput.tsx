@@ -4,12 +4,14 @@ interface DebouncedInputProps {
   value: string;
   onChange: (value: string) => void;
   debounce: number;
+  type: string;
 }
 
 const DebouncedInput = ({
   value: initValue,
   onChange,
-  debounce = 300,
+  debounce = 500,
+  type,
 }: DebouncedInputProps) => {
   const [value, setValue] = useState(initValue);
   useEffect(() => {
@@ -28,7 +30,7 @@ const DebouncedInput = ({
     <input
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      placeholder="Filter"
+      placeholder={type}
       className="sm:py-[8px] py-[6px] w-[40%]   px-[50px] rounded-[10px] font-rubik text-slate-100  bg-[#111827] font-[16px] placeholder:text-slate-600 border-solid border-2 border-slate-500"
     />
   );

@@ -20,7 +20,7 @@ const Navbar = ({ onClick, goToPage }: NavbarProps) => {
             to="/"
             className="tracking-wider sm:text-[32px] text-[28px] font-bold cursor-pointer font-lobsterTwo  no-underline z-50 text-gradient "
           >
-            BookAttic
+            YouthLibrary
           </Link>
         </div>
         <div className="md:hidden gap-3 flex items-center">

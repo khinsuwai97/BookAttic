@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import { FC, ChangeEvent} from 'react';
 import Pagination from '@mui/material/Pagination';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan } from '@mui/material/colors';

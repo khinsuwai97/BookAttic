@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="xl:max-w-[1280px] w-full grid md:grid-cols-2 py-0 sm:px-[32px]  px-[24px]  ">
         <div className=" sm:px-16 px-6 md:mt-20 z-10 max-w-[1300px] md:mb-0 mb-10 ">
           <h1 className="font-rubik text-gradient font-bold sm:text-[58px] ss:text-[44px] leading-tight ss:text-left text-center text-[34px]    ">
-            Welcome to Book Attic eBook Library
+            Welcome to Our eBook Library
           </h1>
           <p className="font-rubik font-normal sm:text-[20px] text-[18px] ss:leading-[30px] text-slate-100 ss:text-left text-center  mt-5 leading-[25px] max-w-[520px] ">
             Browse your favorite books from our collections of ebooks and read
