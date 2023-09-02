@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchBooksAdminbyId, editBooksAdmin } from '../../lib/bookApi';
@@ -16,17 +16,28 @@ const EditBooks = () => {
     queryFn: () => fetchBooksAdminbyId(id ?? ''),
   });
 
-  const iniitalName = data ? data.Result?.name : '';
-  const iniitalPdf_url = data ? data.Result?.pdf_url : '';
-  const iniitalCategory = data ? data.Result?.category : '';
-  const iniitalAuthour = data ? data.Result?.author : '';
-  const iniitalTag = data ? data.Result?.tag : '';
-  const [editName, setEditName] = useState(iniitalName);
-  const [editPdf_url, setEditPdf_url] = useState(iniitalPdf_url);
-  const [editCategory, setEditCategory] = useState(iniitalCategory);
-  const [editAuthor, setEditAuthor] = useState(iniitalAuthour);
-  const [editTag, setEditTag] = useState(iniitalTag);
+  const [editName, setEditName] = useState('');
+  const [editPdf_url, setEditPdf_url] = useState('');
+  const [editCategory, setEditCategory] = useState('');
+  const [editAuthor, setEditAuthor] = useState('');
+  const [editTag, setEditTag] = useState('');
   const [editImage, setEditImage] = useState<string | Blob>('');
+
+  useEffect(() => {
+    setEditName(data?.Result?.name ?? '');
+    setEditPdf_url(data?.Result?.pdf_url ?? '');
+    setEditCategory(data?.Result?.category ?? '');
+    setEditAuthor(data?.Result?.author ?? '');
+    setEditTag(data?.Result?.tag ?? '');
+    setEditImage('');
+  }, [
+    data?.Result?.name,
+    data?.Result?.pdf_url,
+    data?.Result?.category,
+    data?.Result?.author,
+    data?.Result?.tag,
+    data?.Result?.image,
+  ]);
 
   if (isError) {
     return <Error text="Something went wrong!" />;
