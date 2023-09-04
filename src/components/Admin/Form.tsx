@@ -1,21 +1,16 @@
-import React, { FormEvent, ChangeEvent } from 'react';
+import { FormEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreatButton, ButtonList } from '../ui/Button';
 
 interface FormProps {
   onSubmit: (e: FormEvent) => void;
-  name: string | undefined;
-  pdf_url: string | undefined;
-  category: string | undefined;
-  author: string | undefined;
-  tag: string | undefined;
-  setName: (value: React.SetStateAction<string>) => void;
-  setPdf_url: (value: React.SetStateAction<string>) => void;
-  setAuthor: (value: React.SetStateAction<string>) => void;
-  setTag: (value: React.SetStateAction<string>) => void;
-  setCategory: (value: React.SetStateAction<string>) => void;
-  handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  pdf_url: string;
+  category: string;
+  author: string;
+  tag: string;
   type: string;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Form = ({
@@ -25,13 +20,8 @@ const Form = ({
   category,
   author,
   tag,
-  setName,
-  setAuthor,
-  setCategory,
-  setPdf_url,
-  setTag,
-  handleImageChange,
   type,
+  handleChange,
 }: FormProps) => {
   const navigate = useNavigate();
   return (
@@ -48,10 +38,11 @@ const Form = ({
             <input
               type="text"
               id="name"
+              name="name"
               placeholder="Enter name"
               className="form-input"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className="form-container">
@@ -61,27 +52,31 @@ const Form = ({
             <input
               type="text"
               id="pdf_url"
+              name="pdf_url"
               placeholder="Enter pdf_url"
               className="form-input"
               value={pdf_url}
-              onChange={(e) => setPdf_url(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className="form-container">
             <label
               htmlFor="category"
               className="form-label cursor-pointer "
-              onClick={() => navigate('/admin/category')}
+              onClick={() => {
+                navigate('/admin/category');
+              }}
             >
               Category
             </label>
             <input
               type="text"
               id="category"
+              name="category"
               placeholder="Enter category"
               className="form-input"
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className="form-container">
@@ -95,10 +90,11 @@ const Form = ({
             <input
               type="text"
               id="author"
+              name="author"
               placeholder="Enter author"
               className="form-input"
               value={author}
-              onChange={(e) => setAuthor(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className="form-container">
@@ -112,10 +108,11 @@ const Form = ({
             <input
               type="text"
               id="tag"
+              name="tag"
               placeholder="Enter tag name"
               className="form-input"
               value={tag}
-              onChange={(e) => setTag(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className="form-container">
@@ -128,7 +125,7 @@ const Form = ({
               name="image"
               placeholder="Enter tag name"
               className="text-slate-200"
-              onChange={handleImageChange}
+              onChange={handleChange}
             />
           </div>
         </div>

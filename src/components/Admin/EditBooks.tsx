@@ -6,6 +6,15 @@ import { errorToast, successToast } from '../../lib/showToast';
 import Error from '../Error';
 import Form from './Form';
 
+const initialState = {
+  name: '',
+  pdf_url: '',
+  category: '',
+  author: '',
+  tag: '',
+  image: '',
+};
+
 const EditBooks = () => {
   const navigate = useNavigate();
   const param = useParams();
@@ -16,28 +25,20 @@ const EditBooks = () => {
     queryFn: () => fetchBooksAdminbyId(id ?? ''),
   });
 
-  const [editName, setEditName] = useState('');
-  const [editPdf_url, setEditPdf_url] = useState('');
-  const [editCategory, setEditCategory] = useState('');
-  const [editAuthor, setEditAuthor] = useState('');
-  const [editTag, setEditTag] = useState('');
-  const [editImage, setEditImage] = useState<string | Blob>('');
+  const [editBookData, setEditBookData] = useState(initialState);
 
   useEffect(() => {
-    setEditName(data?.Result?.name ?? '');
-    setEditPdf_url(data?.Result?.pdf_url ?? '');
-    setEditCategory(data?.Result?.category ?? '');
-    setEditAuthor(data?.Result?.author ?? '');
-    setEditTag(data?.Result?.tag ?? '');
-    setEditImage('');
-  }, [
-    data?.Result?.name,
-    data?.Result?.pdf_url,
-    data?.Result?.category,
-    data?.Result?.author,
-    data?.Result?.tag,
-    data?.Result?.image,
-  ]);
+    if (data?.Result) {
+      setEditBookData({
+        name: data?.Result?.name,
+        pdf_url: data?.Result?.pdf_url,
+        category: data?.Result?.category,
+        author: data?.Result?.author,
+        tag: data?.Result?.tag,
+        image: '', // data does not persist, need to add image again
+      });
+    }
+  }, [data?.Result]);
 
   if (isError) {
     return <Error text="Something went wrong!" />;
@@ -53,42 +54,35 @@ const EditBooks = () => {
     );
   }
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (!selectedFile) {
-      errorToast('Please select', 'image file!');
-    }
-    if (selectedFile) {
-      setEditImage(selectedFile);
-    }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    setEditBookData({
+      ...editBookData,
+      [name]: files ? files?.[0] : value,
+    });
   };
 
   const onEditFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (
-      editName === '' ||
-      editName.trim() === '' ||
-      editPdf_url === '' ||
-      editPdf_url.trim() === '' ||
-      editCategory === '' ||
-      editCategory.trim() === '' ||
-      editAuthor === '' ||
-      editAuthor.trim() === '' ||
-      editTag === '' ||
-      editTag.trim() === '' ||
-      editImage === ''
+      editBookData.name === '' ||
+      editBookData.pdf_url === '' ||
+      editBookData.category === '' ||
+      editBookData.author === '' ||
+      editBookData.tag === '' ||
+      editBookData.image === ''
     ) {
       errorToast('Please fill out', 'all fields of form!');
       return;
     }
 
     const formData = new FormData();
-    formData.append('name', editName);
-    formData.append('pdf_url', editPdf_url);
-    formData.append('category', editCategory);
-    formData.append('author', editAuthor);
-    formData.append('tag', editTag);
-    formData.append('image', editImage);
+    formData.append('name', editBookData.name!);
+    formData.append('pdf_url', editBookData.pdf_url!);
+    formData.append('category', editBookData.category!);
+    formData.append('author', editBookData.author!);
+    formData.append('tag', editBookData.tag!);
+    formData.append('image', editBookData.image);
 
     try {
       editBooksAdmin(id!, formData);
@@ -96,33 +90,31 @@ const EditBooks = () => {
       console.log(error);
     }
 
-    setEditName('');
-    setEditPdf_url('');
-    setEditCategory('');
-    setEditAuthor('');
-    setEditTag('');
-    setEditImage('');
-    successToast(editName, 'is edited and added to your book list!');
+    setEditBookData({
+      name: '',
+      pdf_url: '',
+      category: '',
+      author: '',
+      tag: '',
+      image: '',
+    });
+
+    successToast(editBookData.name, 'is edited and added to your book list!');
     navigate('/admin');
   };
 
   return (
     <section className="md:py-[90px] py-14">
-      <div className="max-w-[1280px] my-0 mx-auto py-0 sm:px-[32px] px-[24px] ">
+      <div className="max-w-[1280px]  my-0 mx-auto py-0 sm:px-[32px] px-[24px] ">
         <Form
           type="Edit"
           onSubmit={onEditFormSubmit}
-          handleImageChange={handleImageChange}
-          name={editName}
-          author={editAuthor}
-          category={editCategory}
-          tag={editTag}
-          pdf_url={editPdf_url}
-          setName={setEditName}
-          setAuthor={setEditAuthor}
-          setCategory={setEditCategory}
-          setTag={setEditTag}
-          setPdf_url={setEditPdf_url}
+          name={editBookData.name}
+          author={editBookData.author}
+          category={editBookData.category}
+          tag={editBookData.tag}
+          pdf_url={editBookData.pdf_url}
+          handleChange={handleChange}
         />
       </div>
     </section>

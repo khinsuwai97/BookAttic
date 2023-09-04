@@ -8,13 +8,17 @@ import clearLocalStorage from '../../lib/clearLocalStorage';
 import Error from '../Error';
 import Form from './Form';
 
+const initialState = {
+  name: '',
+  pdf_url: '',
+  category: '',
+  author: '',
+  tag: '',
+  image: '',
+};
+
 const CreateBooks = () => {
-  const [name, setName] = useLocalStorage('name', '');
-  const [pdf_url, setPdf_url] = useLocalStorage('pdf_url', '');
-  const [category, setCategory] = useLocalStorage('category', '');
-  const [author, setAuthor] = useLocalStorage('author', '');
-  const [tag, setTag] = useLocalStorage('tag', '');
-  const [image, setImage] = useLocalStorage<string | Blob>('image', '');
+  const [bookData, setBookData] = useLocalStorage('bookData', initialState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -29,59 +33,53 @@ const CreateBooks = () => {
     return <Error text="Cannot create book.Something went wrong!" />;
   }
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (!selectedFile) {
-      errorToast('Please select', 'image file!');
-    }
-    if (selectedFile) {
-      setImage(selectedFile);
-    }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    setBookData({ ...bookData, [name]: files ? files?.[0] : value });
   };
 
   const onCreatBook = (e: FormEvent) => {
     e.preventDefault();
 
     if (
-      name === '' ||
-      name.trim() === '' ||
-      pdf_url === '' ||
-      pdf_url.trim() === '' ||
-      category === '' ||
-      category.trim() === '' ||
-      author === '' ||
-      author.trim() === '' ||
-      tag === '' ||
-      tag.trim() === '' ||
-      image === ''
+      bookData.name === '' ||
+      bookData.name.trim() === '' ||
+      bookData.pdf_url === '' ||
+      bookData.pdf_url.trim() === '' ||
+      bookData.category === '' ||
+      bookData.category.trim() === '' ||
+      bookData.author === '' ||
+      bookData.author.trim() === '' ||
+      bookData.tag === '' ||
+      bookData.tag.trim() === '' ||
+      bookData.image === ''
     ) {
       errorToast('Please fill out', 'all fields of form!');
       return;
     }
 
+   
+
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('pdf_url', pdf_url);
-    formData.append('category', category);
-    formData.append('author', author);
-    formData.append('tag', tag);
-    formData.append('image', image);
+    formData.append('name', bookData.name);
+    formData.append('pdf_url', bookData.pdf_url);
+    formData.append('category', bookData.category);
+    formData.append('author', bookData.author);
+    formData.append('tag', bookData.tag);
+    formData.append('image', bookData.image);
     addBookMutaion.mutate(formData);
 
-    clearLocalStorage('name');
-    clearLocalStorage('pdf_url');
-    clearLocalStorage('category');
-    clearLocalStorage('author');
-    clearLocalStorage('tag');
-    clearLocalStorage('image');
+    clearLocalStorage('bookData');
 
-    setName('');
-    setPdf_url('');
-    setCategory('');
-    setAuthor('');
-    setTag('');
-    setImage('');
-    successToast(name, 'is added to your book list!');
+    setBookData({
+      name: '',
+      pdf_url: '',
+      category: '',
+      author: '',
+      tag: '',
+      image: '',
+    });
+    successToast(bookData.name, 'is added to your book list!');
     navigate('/admin');
   };
 
@@ -91,17 +89,12 @@ const CreateBooks = () => {
         <Form
           type="Create"
           onSubmit={onCreatBook}
-          handleImageChange={handleImageChange}
-          name={name}
-          author={author}
-          category={category}
-          tag={tag}
-          pdf_url={pdf_url}
-          setName={setName}
-          setAuthor={setAuthor}
-          setCategory={setCategory}
-          setTag={setTag}
-          setPdf_url={setPdf_url}
+          name={bookData.name}
+          author={bookData.author}
+          category={bookData.category}
+          tag={bookData.tag}
+          pdf_url={bookData.pdf_url}
+          handleChange={handleChange}
         />
       </div>
     </section>
